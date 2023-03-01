@@ -10,7 +10,7 @@ USER_QUERY=$($PSQL "select username, game_played, best_game from usert where use
 if [[ -z $USER_QUERY ]]
 then
   echo "Welcome, $USERNAME! It looks like this is your first time here."
-  CREATE_NEW_USER=$($PSQL "insert into usert (username, game_played,best_game) values('$USERNAME', 1, 1001)")
+  CREATE_NEW_USER=$($PSQL "insert into usert (username, game_played, best_game) values('$USERNAME', 1, 9999)")
 else
   echo $USER_QUERY | while read USERNAME BAR GAME_PLAYED BAR BEST_GAME
   do
@@ -19,10 +19,10 @@ else
 fi
 
 NUMBER=$(( ( RANDOM % 1000 )  + 1 ))
-#echo $NUMBER
+echo $NUMBER
 
 let GAME_PLAYED=$GAME_PLAYED+1
-ADD_GAME_NUM=$($PSQL "update usert set game_played=$GAME_PLAYED_NEW where username='$USERNAME'")
+ADD_GAME_NUM=$($PSQL "update usert set game_played=$GAME_PLAYED where username='$USERNAME'")
 
 GUESS_TIMES=0
 echo "Guess the secret number between 1 and 1000:"
