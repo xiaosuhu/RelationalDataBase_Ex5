@@ -17,9 +17,9 @@ then
 else
   echo $USER_QUERY | while read USERNAME BAR GAME_PLAYED BAR BEST_GAME
   do
-    echo "Welcome back, $USERNAME! You have played $GAME_PLAYED games, and your best game took $BEST_GAME guesses."
-    GAME_PLAYED_NEW=$((GAME_PLAYED+1))
+    let GAME_PLAYED=$GAME_PLAYED+1
     ADD_GAME_NUM=$($PSQL "update usert set game_played=$GAME_PLAYED_NEW where username='$USERNAME'")
+    echo "Welcome back, $USERNAME! You have played $GAME_PLAYED games, and your best game took $BEST_GAME guesses."
   done
 fi
 
