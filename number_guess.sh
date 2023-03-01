@@ -12,9 +12,9 @@ then
   echo "Welcome, $USERNAME! It looks like this is your first time here."
   CREATE_NEW_USER=$($PSQL "insert into usert (username, game_played, best_game) values('$USERNAME', 1, 9999)")
 else
-  echo $USER_QUERY | while read USERNAME BAR GAME_PLAYED BAR BEST_GAME
+  echo $USER_QUERY | while read USER_NAME BAR GAME_PLAYED BAR BEST_GAME
   do
-    echo "Welcome back, $USERNAME! You have played $GAME_PLAYED games, and your best game took $BEST_GAME guesses."
+    echo "Welcome back, $USER_NAME! You have played $GAME_PLAYED games, and your best game took $BEST_GAME guesses."
     let GAME_PLAYED=$GAME_PLAYED+1
     ADD_GAME_NUM=$($PSQL "update usert set game_played=$GAME_PLAYED where username='$USERNAME'")
   done
