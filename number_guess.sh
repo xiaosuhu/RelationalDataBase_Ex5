@@ -21,6 +21,8 @@ else
   done
 fi
 
+let GAME_PLAYED=$GAME_PLAYED+1
+ADD_GAME_NUM=$($PSQL "update usert set game_played=$GAME_PLAYED_NEW where username='$USERNAME'")
 
 GUESS_TIMES=0
 echo "Guess the secret number between 1 and 1000:"
@@ -53,5 +55,3 @@ do
   fi
 done
 
-let GAME_PLAYED=$GAME_PLAYED+1
-ADD_GAME_NUM=$($PSQL "update usert set game_played=$GAME_PLAYED_NEW where username='$USERNAME'")
