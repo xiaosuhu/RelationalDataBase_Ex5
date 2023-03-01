@@ -16,7 +16,7 @@ else
   do
     echo "Welcome back, $USER_NAME! You have played $GAME_PLAYED games, and your best game took $BEST_GAME guesses."
     let GAME_PLAYED=$GAME_PLAYED+1
-    ADD_GAME_NUM=$($PSQL "update usert set game_played=$GAME_PLAYED where username='$USERNAME'")
+    ADD_GAME_NUM=$($PSQL "update usert set game_played=$GAME_PLAYED where username='$USER_NAME'")
   done
 fi
 
@@ -44,11 +44,11 @@ do
       let GUESS_TIMES=$GUESS_TIMES+1
  
       # Compare with the previous best_game record and write in database
-      echo $USER_QUERY | while read USERNAME BAR GAME_PLAYED BAR BEST_GAME
+      echo $USER_QUERY | while read USER_NAME BAR GAME_PLAYED BAR BEST_GAME
       do
         if [[ $GUESS_TIMES < $BEST_GAME ]]
         then
-          NEW_BEST_GAME=$($PSQL "update usert set best_game=$GUESS_TIMES where username='$USERNAME'")
+          NEW_BEST_GAME=$($PSQL "update usert set best_game=$GUESS_TIMES where username='$USER_NAME'")
         fi
       done
         
