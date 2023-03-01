@@ -27,6 +27,7 @@ fi
 
 GUESS_TIMES=0
 echo "Guess the secret number between 1 and 1000:"
+
 while read GUESS
 do
   if [[ ! $GUESS =~ ^[0-9]+$ ]]
