@@ -13,8 +13,7 @@ USER_QUERY=$($PSQL "select username, game_played, best_game from usert where use
 if [[ -z $USER_QUERY ]]
 then
   echo "Welcome, $USERNAME! It looks like this is your first time here."
-  CREATE_NEW_USER=$($PSQL "insert into usert (username, game_played) values('$USERNAME', 1)")
-  BEST_GAME=0
+  CREATE_NEW_USER=$($PSQL "insert into usert (username, game_played,best_game) values('$USERNAME', 1, 1001)")
 else
   echo $USER_QUERY | while read USERNAME BAR GAME_PLAYED BAR BEST_GAME
   do
@@ -46,11 +45,8 @@ do
       let GUESS_TIMES=$GUESS_TIMES+1
       echo "You guessed it in $GUESS_TIMES tries. The secret number was $NUMBER. Nice job!"
       # Compare with the previous best_game record and write in database
-      
-      if [[ -z $BEST_GAME ]]
-      then
-        NEW_BEST_GAME=$($PSQL "update usert set best_game=$GUESS_TIMES where username='$USERNAME'")
-      elif [[ $GUESS_TIMES -le $BEST_GAME ]]
+     
+      if [[ $GUESS_TIMES -le $BEST_GAME ]]
       then
         NEW_BEST_GAME=$($PSQL "update usert set best_game=$GUESS_TIMES where username='$USERNAME'")
       fi
