@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PSQL="psql --username=freecodecamp --dbname=<database_name> -t -c"
+PSQL="psql --username=freecodecamp --dbname=number_guess -t -c"
 
 NUMBER=$(( ( RANDOM % 1000 )  + 1 ))
 echo $NUMBER
@@ -10,13 +10,13 @@ read USERNAME
 
 USER_QUERY=$($PSQL "select username, game_played, best_game from usert where username='$USERNAME'")
 
-if [[ -z USER_QUERY ]]
+if [[ -z $USER_QUERY ]]
 then
   echo "Welcome, $USERNAME! It looks like this is your first time here."
-  CREATE_NEW_USER=$($PSQL "insert into usert (username, game_played) values('$USERNAME', 1)")
+  CREATE_NEW_USER=$($PSQL "insert into usert (username, game_played,best_game) values('$USERNAME', 1, 0)")
   BEST_GAME=0
 else
-  echo $USER_QUERY | while read USERNAME BAR GAME_PLAYED | BEST_GAME
+  echo $USER_QUERY | while read USERNAME BAR GAME_PLAYED BAR BEST_GAME
   do
     echo "Welcome back, $USERNAME! You have played $GAME_PLAYED games, and your best game took $BEST_GAME guesses."
     GAME_PLAYED_NEW=$((GAME_PLAYED+1))
