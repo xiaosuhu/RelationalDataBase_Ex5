@@ -2,8 +2,6 @@
 
 PSQL="psql --username=freecodecamp --dbname=number_guess -t -c"
 
-NUMBER=$(( ( RANDOM % 1000 )  + 1 ))
-echo $NUMBER
 
 echo "Enter your username:"
 read USERNAME
@@ -20,6 +18,9 @@ else
     echo "Welcome back, $USERNAME! You have played $GAME_PLAYED games, and your best game took $BEST_GAME guesses."
   done
 fi
+
+NUMBER=$(( ( RANDOM % 1000 )  + 1 ))
+#echo $NUMBER
 
 let GAME_PLAYED=$GAME_PLAYED+1
 ADD_GAME_NUM=$($PSQL "update usert set game_played=$GAME_PLAYED_NEW where username='$USERNAME'")
