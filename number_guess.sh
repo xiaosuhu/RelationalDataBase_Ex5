@@ -44,13 +44,11 @@ do
       let GUESS_TIMES=$GUESS_TIMES+1
  
       # Compare with the previous best_game record and write in database
-      echo $USER_QUERY | while read USER_NAME BAR GAME_PLAYED BAR BEST_GAME
-      do
-        if [[ $GUESS_TIMES < $BEST_GAME ]]
-        then
-          NEW_BEST_GAME=$($PSQL "update usert set best_game=$GUESS_TIMES where username='$USER_NAME'")
-        fi
-      done
+      BEST_GAME=$($PSQL "select best_game from usert where username='$USERNAME'")
+      if [[ $GUESS_TIMES < $BEST_GAME ]]
+      then
+        NEW_BEST_GAME=$($PSQL "update usert set best_game=$GUESS_TIMES where username='$USERNAME'")
+      fi
         
       echo "You guessed it in $GUESS_TIMES tries. The secret number was $NUMBER. Nice job!"
 
